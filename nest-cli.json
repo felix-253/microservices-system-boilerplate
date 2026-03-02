@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/microservices/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/microservices/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/microservices",
+  "projects": {
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    },
+    "department-service": {
+      "type": "application",
+      "root": "apps/department-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/department-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/department-service/tsconfig.app.json"
+      }
+    },
+    "employee-service": {
+      "type": "application",
+      "root": "apps/employee-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/employee-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/employee-service/tsconfig.app.json"
+      }
+    },
+    "microservices": {
+      "type": "application",
+      "root": "apps/microservices",
+      "entryFile": "main",
+      "sourceRoot": "apps/microservices/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/microservices/tsconfig.app.json"
+      }
+    },
+    "notification-service": {
+      "type": "application",
+      "root": "apps/notification-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/notification-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/notification-service/tsconfig.app.json"
+      }
+    },
+    "salary-service": {
+      "type": "application",
+      "root": "apps/salary-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/salary-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/salary-service/tsconfig.app.json"
+      }
+    },
+    "search-service": {
+      "type": "application",
+      "root": "apps/search-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/search-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/search-service/tsconfig.app.json"
+      }
+    }
+  }
+}
