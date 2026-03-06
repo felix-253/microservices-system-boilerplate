@@ -8,7 +8,6 @@ import { winstonLogger } from './config/logger/winston.config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './config/interceptors/logger.interceptor';
 import { EmployeeModule } from './app/employee/employee.module';
-import { DepartmentModule } from './app/department/department.module';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { DepartmentModule } from './app/department/department.module';
     }),
     WinstonModule.forRoot(winstonLogger),
     EmployeeModule,
-    DepartmentModule,
   ],
   providers: [
     {
