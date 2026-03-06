@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
-import { EmployeeServiceController } from './employee-service.controller';
-import { EmployeeServiceService } from './employee-service.service';
+import { AsyncTaskModule } from './app/async-task/async-task.module';
 
 @Module({
-  imports: [],
-  controllers: [EmployeeServiceController],
-  providers: [EmployeeServiceService],
+  imports: [AsyncTaskModule],
 })
 export class EmployeeServiceModule {}

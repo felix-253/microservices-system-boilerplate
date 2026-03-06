@@ -1,21 +1,27 @@
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
-import { AppModule } from 'apps/microservices/src/app.module';
+import { EmployeeServiceModule } from './employee-service.module';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice(AppModule, {
+  const app = await NestFactory.createMicroservice(EmployeeServiceModule, {
     transport: Transport.KAFKA,
     options: {
       client: {
         clientId: 'employee-service',
-        brokers: ['kafka:9092'],
+        brokers: ['localhost:9092'],
       },
       consumer: {
         groupId: 'employee-consumer',
+        allowAutoTopicCreation: true,
+      },
+      subscribe: {
+        fromBeginning: true,
       },
     },
   });
 
   await app.listen();
+
+  console.log('Employee Kafka microservice started');
 }
 bootstrap();

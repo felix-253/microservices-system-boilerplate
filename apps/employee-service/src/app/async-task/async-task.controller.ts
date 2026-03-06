@@ -1,10 +1,10 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { AsyncTaskService } from './async-task.service';
 import { CreateAsyncTaskDto } from './dto/create-async-task.dto';
 import { UpdateAsyncTaskDto } from './dto/update-async-task.dto';
 
-@Controller('employee')
+@Controller()
 export class AsyncTaskController {
   constructor(private readonly asyncTaskService: AsyncTaskService) {}
 
@@ -23,8 +23,9 @@ export class AsyncTaskController {
     return this.asyncTaskService.findOne(id);
   }
 
-  @MessagePattern('updateAsyncTask')
+  @EventPattern('updateAsyncTask')
   update(@Payload() updateAsyncTaskDto: UpdateAsyncTaskDto) {
+    console.log('RUN', updateAsyncTaskDto);
     return this.asyncTaskService.update(
       updateAsyncTaskDto.id,
       updateAsyncTaskDto,
