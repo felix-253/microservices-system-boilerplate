@@ -7,14 +7,9 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
-  @Get()
-  getEmployee() {
-    return this.employeeService.getById();
-  }
-
   @Get('all')
-  getEmployees(@Param() data: any) {
-    return this.employeeService.get(data);
+  async getEmployees(@Param() data: any): Promise<any> {
+    return await this.employeeService.get(data);
   }
 
   @Post()
@@ -37,6 +32,7 @@ export class EmployeeController {
     description: 'Invalid employee data',
   })
   postEmployee(@Body() data: CreateEmployeeDto) {
+    console.log('sendd');
     return this.employeeService.createEmployee(data);
   }
 }

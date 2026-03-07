@@ -1,37 +1,57 @@
-const axios = require("axios");
+const URL = 'http://localhost:5001/employee';
 
-const URL = "http://localhost:5001/employee";
+function randomChoice(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateData() {
+  const brands = ['samsung', 'oppo', 'vivo', 'realme', 'huawei'];
+  const categories = [
+    'electronics.smartphone',
+    'electronics.tablet',
+    'electronics.audio',
+    'electronics.camera',
+  ];
+  const events = ['view', 'cart', 'purchase'];
+
+  return {
+    event_time: new Date().toISOString(),
+    event_type: randomChoice(events),
+    product_id: Math.floor(Math.random() * 9000000) + 1000000,
+    category_id: Math.floor(Math.random() * 9000000000000000000n),
+    category_code: randomChoice(categories),
+    brand: randomChoice(brands),
+    price: (Math.random() * 900 + 100).toFixed(2),
+    user_id: Math.floor(Math.random() * 900000000) + 100000000,
+    user_session: crypto.randomUUID(),
+  };
+}
 
 async function sendRequest(i) {
-  const data = {
-    event_time: new Date().toISOString(),
-    event_type: "view",
-    product_id: Math.floor(Math.random() * 1000),
-    category_id: Math.floor(Math.random() * 100),
-    category_code: "electronics.smartphone",
-    brand: "samsung",
-    price: (Math.random() * 1000).toFixed(2),
-    user_id: Math.floor(Math.random() * 10000),
-    user_session: "session_" + Math.random().toString(36).substring(2, 15),
-  };
+  const data = generateData();
 
   try {
-    const res = await axios.post(URL, data);
-    console.log(`Request ${i} success`);
+    const res = await fetch(URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    console.log(`Request ${i} status:`, res.status);
   } catch (err) {
-    console.error(`Request ${i} error`, err.message);
+    console.error(`Request ${i} error:`, err.message);
   }
 }
 
 async function run() {
-  const requests = [];
+  const tasks = [];
 
   for (let i = 1; i <= 100; i++) {
-    requests.push(sendRequest(i));
+    tasks.push(sendRequest(i));
   }
 
-  await Promise.all(requests);
-  console.log("Sent 100 requests");
+  await Promise.all(tasks);
+  console.log('Finished sending 100 requests');
 }
 
 run();

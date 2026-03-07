@@ -14,8 +14,8 @@ export class AsyncTaskController {
   }
 
   @MessagePattern('findAllAsyncTask')
-  findAll() {
-    return this.asyncTaskService.findAll();
+  findAll(@Payload() data: any) {
+    return this.asyncTaskService.findAll(data);
   }
 
   @MessagePattern('findOneAsyncTask')

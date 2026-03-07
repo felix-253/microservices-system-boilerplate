@@ -1,24 +1,33 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class EmployeeService implements OnModuleInit {
   constructor(
     @Inject('EMPLOYEE_SERVICE') private readonly employeeKafka: ClientKafka,
   ) {}
+
   async onModuleInit() {
+    console.log('Subscribing to reply topic...');
     this.employeeKafka.subscribeToResponseOf('findAllAsyncTask');
-    this.employeeKafka.subscribeToResponseOf('employee.create');
-    this.employeeKafka.subscribeToResponseOf('updateAsyncTask');
+
+    console.log('Connecting Kafka...');
     await this.employeeKafka.connect();
+
+    console.log('Kafka connected successfully');
   }
-  getById() {}
-  get(data) {
-    this.employeeKafka.emit('findAllAsyncTask', data);
+  async get(data: any): Promise<any> {
+    return lastValueFrom(
+      this.employeeKafka.send('findAllAsyncTask', {
+        name: 'felix',
+        age: 24,
+      }),
+    );
   }
+
   createEmployee(data: CreateEmployeeDto) {
-    this.employeeKafka.emit('updateAsyncTask', data);
-    return { message: 'Employee creation event sent' };
+    return this.employeeKafka.emit('createAsyncTask', data);
   }
 }

@@ -16,7 +16,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           },
           consumer: {
             groupId: 'api-gateway-consumer',
-            sessionTimeout: 5000,
+            sessionTimeout: 10000,
+            rebalanceTimeout: 10000,
           },
         },
       },
